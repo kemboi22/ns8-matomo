@@ -7,6 +7,7 @@
 
 # If the control reaches this step, the service can be enabled and started
 
-touch smarthost.env
 
-systemctl --user enable --now kickstart.service
+
+systemctl --user enable --now matomo.service
+systemctl --user restart --now matomo.service

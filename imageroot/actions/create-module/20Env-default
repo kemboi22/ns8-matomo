@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+
+#
+# Copyright (C) 2023 Nethesis S.r.l.
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
+import json
+import sys
+import agent
+import os
+from pathlib import Path
+
+# try to find the timezone except to UTC
+symlink_path = "/etc/localtime"
+resolved_path = Path(symlink_path).resolve()
+timezone = str(resolved_path.relative_to(Path("/usr/share/zoneinfo")))
+if not timezone:
+    timezone = "UTC"
+
+# Create default vars
+agent.set_env("MATOMO_DATABASE_ADAPTER", "mysql")
+agent.set_env("MATOMO_DATABASE_TABLES_PREFIX", "matomo")
+agent.set_env("MARIADB_DISABLE_UPGRADE_BACKUP", 1)
+agent.set_env("MARIADB_AUTO_UPGRADE", 1)
+agent.set_env("MYSQL_ROOT_PASSWORD", "Nethesis,1234")
+agent.set_env("PHP_MEMORY_LIMIT", 2048)
+agent.set_env("MATOMO_DATABASE_HOST", "http://127.0.0.1")
+agent.set_env("MARIADB_INITDB_SKIP_TZINFO", "1")
+agent.set_env("SOGOMAXIMUMPINGINTERVAL", "3540")
+agent.set_env("SOGOMAXIMUMSYNCINTERVAL", "3540")
+agent.set_env("SOGOMAXIMUMSYNCRESPONSESIZE", "2048")
+agent.set_env("SOGOMAXIMUMSYNCWINDOWSIZE", "100")
+agent.set_env("SENTFOLDER", "Sent")
+agent.set_env("SESSIONDURATION", "1440")
+agent.set_env("SXVMEMLIMIT", "512")
+agent.set_env("TIMEZONE", timezone)
+agent.set_env("TRASHFOLDER", "Trash")
+agent.set_env("WOWATCHDOGREQUESTTIMEOUT", "60")
+agent.set_env("BACKUPTIME", "#30 0")

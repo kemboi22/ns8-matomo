@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+
+#
+# Copyright (C) 2023 Nethesis S.r.l.
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
+import json
+import sys
+import agent
+
+# Try to parse the stdin as JSON.
+# If parsing fails, output everything to stderr
+data = json.load(sys.stdin)
+
+# Setup configuration from user input.
+agent.set_env("MYSQL_ROOT_PASSWORD", data("mysql_root_password","Nethesis,1234"))
+agent.set_env("MYSQL_PASSWORD", data.get["mysql_password"])
+agent.set_env("MYSQL_DATABASE", data["mysql_database"])
+agent.set_env("MYSQL_USER",data.get["mysql_user"])
+agent.set_env("MATOMO_DATABASE_USERNAME",data.get["matomo_database_username"])
+agent.set_env("MATOMO_DATABASE_PASSWORD",data.get["matomo_database_password"])
+agent.set_env("MATOMO_DATABASE_DBNAME",data.get["matomo_database_dbname"])
+agent.set_env("MARIADB_AUTO_UPGRADE",data.get("mariadb_auto_upgrade","1"))
+agent.set_env("MARIADB_DISABLE_UPGRADE_BACKUP",data.get("mariadb_disable_upgrade_backup","1"))
+agent.set_env("MATOMO_DATABASE_TABLES_PREFIX",data.get("matomo_database_tables_prefix","matomo"))
+agent.set_env("MATOMO_DATABASE_ADAPTER",data.get("matomo_database_adapter","mysql"))
