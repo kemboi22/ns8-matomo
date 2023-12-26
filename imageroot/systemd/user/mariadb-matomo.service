@@ -5,8 +5,9 @@
 
 [Unit]
 Description=Podman mariadb-matomo.service
-BindsTo=matomo.service
-After=matomo.service
+BindsTo=matomo-pod.service
+Before=matomo.service
+
 
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n
