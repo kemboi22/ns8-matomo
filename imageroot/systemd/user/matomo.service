@@ -30,11 +30,11 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/matomo.pid \
 #   --env-file=%S/state/environment -p 127.0.0.1:${TCP_PORT}:8080 \
     --env MATOMO_DATABASE_HOST=127.0.0.1 \
 #   --env PHP_MEMORY_LIMIT=127.0.0.1 \
-    --volume ./config/matomo.conf:/etc/matomo/matomo.conf:Z \
-    --volume ./config/cron-matomo:/etc/cron.d/cron-matomo:Z \
-    --volume ./config/sieve.creds:/etc/matomo/sieve.creds:Z \
+    --volume ./config:/var/www/html/config:Z \
+    --volume ./logs:/var/www/html/logs:z \
+    --volume matomo:var/www/html:z \
     --volume ./config/matomo.conf:/etc/httpd/conf/extra/matomo.conf:Z \
-    --volume ./backups:/etc/matomo/backups:Z \
+    --volume matomo:/var/www/html:z,ro \
     ${MATOMO_SERVER_IMAGE}
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/matomo.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP matomo

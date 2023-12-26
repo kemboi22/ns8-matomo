@@ -1,8 +1,74 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "get-configuration output",
-    "$id": "http://schema.nethserver.org/kickstart/get-configuration-output.json",
-    "description": "Get kickstart configuration",
-    "examples": [],
-    "type": "object"
+    "title": "configure-module input",
+    "$id": "http://schema.nethserver.org/sogo/configure-module-input.json",
+    "description": "Configure matomo",
+    "examples": [
+        {
+            "mysql_password": "Password,1234",
+            "mysql_database": "matomo",
+            "mysql_user": "Administrator,user1",
+            "matomo_database_username": "domain.org",
+            "matomo_database_password": false,
+            "host": "matomo.domain.org",
+            "matomo_database_dbname": "matomo",
+            "mariadb_auto_upgrade": "1,0",
+            "mariadb_disable_upgrade_backup": "1,0",
+            "matomo_database_tables_prefix": "matomo,m1",
+            "matomo_database_adapter": "mysql"
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "mysql_password": {
+            "type": "string"
+        },
+        "mysql_database": {
+            "type": "string"
+        },
+        "mysql_user": {
+            "type": "string"
+        },
+        "matomo_database_username": {
+            "type": "string"
+        },
+        "matomo_database_password": {
+            "type": "string"
+        },
+        "matomo_database_dbname": {
+            "type": "string"
+        },
+        "lets_encrypt": {
+            "type": "boolean"
+        },
+        "host": {
+            "type": "string"
+        },
+        "mariadb_auto_upgrade": {
+            "type": "boolean"
+        },
+        "mariadb_disable_upgrade_backup": {
+            "type": "boolean"
+        },
+        "matomo_database_tables_prefix": {
+            "type": "boolean"
+        },
+        "matomo_database_adapter": {
+            "type": "boolean"
+        }
+    },
+    "required": [
+        "mysql_password",
+        "mysql_database",
+        "mysql_user",
+        "matomo_database_username",
+        "matomo_database_password",
+        "matomo_database_dbname",
+        "lets_encrypt",
+        "host",
+        "mariadb_auto_upgrade",
+        "mariadb_disable_upgrade_backup",
+        "matomo_database_tables_prefix",
+        "matomo_database_adapter"
+    ]
 }

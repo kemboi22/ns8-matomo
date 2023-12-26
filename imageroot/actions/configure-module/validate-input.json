@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "configure-module input",
     "$id": "http://schema.nethserver.org/sogo/configure-module-input.json",
-    "description": "Configure sogo",
+    "description": "Configure matomo",
     "examples": [
         {
             "mysql_password": "Password,1234",
