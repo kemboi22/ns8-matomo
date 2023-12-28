@@ -35,3 +35,5 @@ agent.set_env("MYSQL_USER", "matomo")
 agent.set_env("MYSQL_PASSWORD", "Nethesis,1234")
 
 # Try to parse the stdin as JSON.
+
+

@@ -1,3 +1,4 @@
+import os
 import sys
 import json
 import agent
@@ -25,22 +26,11 @@ rdb = agent.redis_connect() # full read-only access on every key
 
 modules=[]
 tmp = []
-# we query about all mail server to use it inside the user interface
-for key in agent.list_service_providers(rdb,'imap','tcp'):
-    mail = key['module_id']
-    get_retval = agent.tasks.run(f"module/{mail}",'list-domains')
-    for kd in get_retval['output']:
-        if kd['addusers']:
-            obj = {
-                "name": key['module_id'],
-                "label": f"{kd['domain']} ({key['mail_hostname']})",
-                "value": key['module_uuid']+','+kd['domain'],
-            }
-            modules.append(obj)
 
-# use it inside a dropdown
-config['mail_server_URL'] = modules
-
+# retrieve installed modules list
+for key in rdb.scan_iter("module:*"):
+    tmp.append(key.decode("utf-8"))
+    
 # retrieve LDAP domains list
 lp = Ldapproxy()
 domains = []

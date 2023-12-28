@@ -28,7 +28,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/matomo.pid \
     --pod-id-file %t/matomo.pod-id --replace -d --name  matomo \
     --publish 127.0.0.1:${TCP_PORT}:2221 \
 #   --env-file=%S/state/environment -p 127.0.0.1:${TCP_PORT}:8080 \
-    --env MATOMO_DATABASE_HOST=127.0.0.1 \
+#   --env MATOMO_DATABASE_HOST=127.0.0.1 \
 #   --env PHP_MEMORY_LIMIT=127.0.0.1 \
     --volume ./config:/var/www/html/config:Z \
     --volume ./logs:/var/www/html/logs:z \
