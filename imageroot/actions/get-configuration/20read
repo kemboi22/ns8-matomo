@@ -17,6 +17,7 @@ config["mariadb_auto_upgrade"] = os.getenv("MARIADB_AUTO_UPGRADE") == "1"
 config["mariadb_disable_upgrade_backup"] = os.getenv("MARIADB_DISABLE_UPGRADE_BACKUP") == "1"
 config["matomo_database_tables_prefix"] = os.getenv("MARIADB_AUTO_UPGRADE") == "1"
 config["matomo_database_adapter"] = os.getenv("MARIADB_DISABLE_UPGRADE_BACKUP") == "1"
+config["matomo_database_host"] = os.getenv("MATOMO_DATABASE_HOST")
 
 rdb = agent.redis_connect() # full read-only access on every key
 
