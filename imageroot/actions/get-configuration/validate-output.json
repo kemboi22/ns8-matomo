@@ -5,9 +5,8 @@
     "description": "Configure matomo",
     "examples": [
         {
-  
             "matomo_database_username": "user",
-            "matomo_database_password": false,
+            "matomo_database_password": "",
             "host": "matomo.domain.org",
             "matomo_database_dbname": "matomo",
             "mariadb_auto_upgrade": "1,0",
@@ -19,12 +18,6 @@
     "type": "object",
     "properties": {
         "mysql_password": {
-            "type": "string"
-        },
-        "mysql_database": {
-            "type": "string"
-        },
-        "mysql_user": {
             "type": "string"
         },
         "matomo_database_username": {
@@ -56,8 +49,6 @@
         }
     },
     "required": [
-
         "host"
-
     ]
 }
