@@ -23,7 +23,6 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/mariadb-matomo.pid \
     --env MARIADB_AUTO_UPGRADE=1 \
     --env MARIADB_DISABLE_UPGRADE_BACKUP=1 \
     --env MATOMO_DATABASE_TABLES_PREFIX=ns8 \
-    
     ${MARIADB_IMAGE} \
     --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 ExecStartPost=/usr/bin/podman exec  mariadb-matomo /bin/bash -c 'printf "[client] \npassword=Nethesis,1234" > /root/.my.cnf'
