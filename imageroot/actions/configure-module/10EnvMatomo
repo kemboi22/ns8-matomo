@@ -14,10 +14,8 @@ import agent
 data = json.load(sys.stdin)
 
 # Setup configuration from user input.
-agent.set_env("MYSQL_ROOT_PASSWORD", data("mysql_root_password","Nethesis,1234"))
-agent.set_env("MYSQL_PASSWORD", data.get["mysql_password"])
-agent.set_env("MYSQL_DATABASE", data["mysql_database"])
-agent.set_env("MYSQL_USER",data.get["mysql_user"])
+
+agent.set_env("MATOMO_DATABASE_HOST",data.get["matomo_database_username"])
 agent.set_env("MATOMO_DATABASE_USERNAME",data.get["matomo_database_username"])
 agent.set_env("MATOMO_DATABASE_PASSWORD",data.get["matomo_database_password"])
 agent.set_env("MATOMO_DATABASE_DBNAME",data.get["matomo_database_dbname"])

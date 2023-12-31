@@ -27,7 +27,11 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/matomo.pid \
     --cidfile %t/matomo.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/matomo-pod.pod-id --replace -d --name  matomo \
 #   --env-file=%S/state/environment -p 127.0.0.1:${TCP_PORT}:8080 \
+    --env MATOMO_DATABASE_ADAPTER=mysql \
     --env MATOMO_DATABASE_HOST=127.0.0.1 \
+    --env MATOMO_DATABASE_USERNAME=matomo \
+    --env MATOMO_DATABASE_PASSWORD=Matomo,1234 \
+    --env MATOMO_DATABASE_DBNAME=matomo \
     --volume ./config:/var/www/html/config:Z \
     --volume ./logs:/var/www/html/logs:z \
     --volume matomo:var/www/html:z \

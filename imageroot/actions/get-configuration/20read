@@ -10,10 +10,6 @@ config = {}
 # Read current configuration from the environment file
 config["host"] = os.getenv("TRAEFIK_HOST","")
 config["lets_encrypt"] = os.getenv("TRAEFIK_LETS_ENCRYPT") == "True"
-config["mysql_root_password"] = os.getenv("MYSQL_ROOT_PASSWORD", "Nethesis,1234") # the value is the Mail module UUID!
-config["mysql_password"] = os.getenv("MYSQL_PASSWORD", "Nethesis,1234") # the value is the mail domain of user to force domain identity : user@domain.com !
-config["mysql_database"] = os.getenv("MYSQL_DATABASE", "matomo")
-config["mysql_user"] = os.getenv("MYSQL_USER", "matomo")
 config["matomo_database_username"] = os.getenv("MATOMO_DATABASE_USERNAME", "matomo")
 config["matomo_database_password"] = os.getenv("MATOMO_DATABASE_PASSWORD","Nethesis,1234")
 config["matomo_database_dbname"] = os.getenv("MATOMO_DATABASE_DBNAME","matomo")

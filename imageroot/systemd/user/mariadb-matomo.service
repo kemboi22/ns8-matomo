@@ -19,18 +19,11 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/mariadb-matomo.pid \
     --cidfile %t/mariadb-matomo.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/matomo-pod.pod-id --replace -d --name mariadb-matomo \
     --env-file=%S/state/environment \
-    --volume mysql-data:/var/lib/mysql/:Z \
-    --env MYSQL_ROOT_PASSWORD=Nethesis,1234 \
-    --env MYSQL_PASSWORD=Matomo,1234 \
-    --env MYSQL_DATABASE=matomo \
-    --env MYSQL_USER=matomo \
-    --env MATOMO_DATABASE_USERNAME=matomo \
-    --env MATOMO_DATABASE_PASSWORD=Matomo,1234 \
-    --env MATOMO_DATABASE_DBNAME=matomo \
+    --volume mysql-data:/usr/src/matomo/data \
     --env MARIADB_AUTO_UPGRADE=1 \
     --env MARIADB_DISABLE_UPGRADE_BACKUP=1 \
     --env MATOMO_DATABASE_TABLES_PREFIX=ns8 \
-    --env MATOMO_DATABASE_ADAPTER=mysql \
+    
     ${MARIADB_IMAGE} \
     --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 ExecStartPost=/usr/bin/podman exec  mariadb-matomo /bin/bash -c 'printf "[client] \npassword=Nethesis,1234" > /root/.my.cnf'
