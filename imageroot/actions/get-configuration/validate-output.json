@@ -42,10 +42,10 @@
             "type": "boolean"
         },
         "matomo_database_tables_prefix": {
-            "type": "boolean"
+            "type": "string"
         },
         "matomo_database_adapter": {
-            "type": "boolean"
+            "type": "string"
         }
     },
     "required": [
