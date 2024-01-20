@@ -5,12 +5,12 @@
     "description": "Configure matomo",
     "examples": [
         {
-            "matomo_database_username": "user",
+            "matomo_database_username": "",
             "matomo_database_password": "",
             "host": "matomo.domain.org",
             "matomo_database_dbname": "matomo",
-            "mariadb_auto_upgrade": "1,0",
-            "mariadb_disable_upgrade_backup": "1,0",
+            "mariadb_auto_upgrade": "1",
+            "mariadb_disable_upgrade_backup": "0",
             "matomo_database_tables_prefix": "matomo",
             "matomo_database_adapter": "mysql"
         }
