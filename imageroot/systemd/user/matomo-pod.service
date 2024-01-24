@@ -18,14 +18,14 @@ Environment=PODMAN_SYSTEMD_UNIT=%n
 EnvironmentFile=-%S/state/environment
 Restart=always
 TimeoutStopSec=70
-ExecStartPre=/bin/rm -f %t/matomo-pod.pod.pid %t/matomo-pod.pod.pod-id
+ExecStartPre=/bin/rm -f %t/matomo-pod.pod.pid %t/matomo-pod.pod-id
 ExecStartPre=/usr/bin/podman pod create --infra-conmon-pidfile %t/matomo-pod.pod.pid \
     --pod-id-file %t/matomo-pod.pod-id \
     --name paperlessngx \
     --publish 127.0.0.1:${TCP_PORT}:3858 \
     --replace
 ExecStart=/usr/bin/podman pod start --pod-id-file %t/matomo-pod.pod.pod-id
-ExecStop=/usr/bin/podman pod stop --ignore --pod-id-file %t/matomo-pod.pod.pod-id -t 10
+ExecStop=/usr/bin/podman pod stop --ignore --pod-id-file %t/matomo-pod.pod-id -t 10
 ExecStopPost=/usr/bin/podman pod rm --ignore -f --pod-id-file %t/matomo-pod.pod-id
 PIDFile=%t/matomo-pod.pod.pid
 Type=forking
