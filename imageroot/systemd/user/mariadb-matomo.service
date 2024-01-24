@@ -17,7 +17,7 @@ TimeoutStopSec=70
 ExecStartPre=/bin/rm -f %t/mariadb-matomo.pid %t/mariadb-matomo.ctr-id
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/mariadb-matomo.pid \
     --cidfile %t/mariadb-matomo.ctr-id --cgroups=no-conmon \
-    --pod-id-file %t/matomo-pod.pod-id --replace -d --name mariadb-matomo \
+    --pod-id-file %t/matomo-app.pod-id --replace -d --name mariadb-matomo \
     --env-file=%S/state/environment \
     --volume mysql-data:/usr/src/matomo/data \
     --env MARIADB_AUTO_UPGRADE=1 \
