@@ -9,5 +9,5 @@
 
 
 
-systemctl --user enable --now matomo-pod.service
-systemctl --user restart --now matomo-pod.service
+systemctl --user enable --now matomo.service
+systemctl --user restart --now matomo.service
