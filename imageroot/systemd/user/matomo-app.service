@@ -1,0 +1,49 @@
+#
+# Copyright (C) 2023 Nethesis S.r.l.
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
+[Unit]
+Description=Podman  matomo.service
+BindsTo=matomo.service
+After=mariadb-matomo.service
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+EnvironmentFile=%S/state/environment
+EnvironmentFile=-%S/state/discovery_mail.env
+EnvironmentFile=-%S/state/discovery_ldap.env
+WorkingDirectory=%S/state
+Restart=always
+TimeoutStopSec=70
+ExecStartPre=/usr/bin/bash -c "/bin/mkdir -p {config,backups}"
+ExecStartPre=/bin/rm -f %t/matomo.pid %t/matomo.ctr-id
+ExecStartPre=/usr/local/bin/runagent discover-ldap
+ExecStartPre=/usr/local/bin/runagent discover-service
+ExecStartPre=/usr/local/bin/runagent expand-configuration
+ExecStartPre=/usr/local/bin/runagent reveal-master-secret
+ExecStartPost=/usr/bin/bash -c "while ! /usr/bin/podman exec matomo /usr/bin/curl  http://127.0.0.1:3858/matomo ; do sleep 3 ; done"
+ExecStart=/usr/bin/podman run --conmon-pidfile %t/matomo-app.pid \
+    --cidfile %t/matomo.ctr-id --cgroups=no-conmon \
+    --pod-id-file %t/matomo-pod.pod-id --replace -d --name  matomo \
+#   --env-file=%S/state/environment -p 127.0.0.1:${TCP_PORT}:8080 \
+    --env MATOMO_DATABASE_ADAPTER=mysql \
+    --env MATOMO_DATABASE_HOST=127.0.0.1 \
+    --env MATOMO_DATABASE_USERNAME=matomo \
+    --env MATOMO_DATABASE_PASSWORD=Matomo,1234 \
+    --env MATOMO_DATABASE_DBNAME=matomo \
+    --volume ./config:/var/www/html/config:Z \
+    --volume ./logs:/var/www/html/logs:z \
+    --volume matomo:var/www/html:z \
+    --volume ./config/matomo.conf:/etc/httpd/conf/extra/matomo.conf:Z \
+    --volume matomo:/var/www/html:z,ro \
+    ${MATOMO_IMAGE}
+ExecStop=/usr/bin/podman stop --ignore --cidfile %t/matomo.ctr-id -t 10
+ExecReload=/usr/bin/podman kill -s HUP matomo
+SyslogIdentifier=%u
+ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/matomo.ctr-id
+PIDFile=%t/matomo-app.pid
+Type=forking
+
+[Install]
+WantedBy=default.target

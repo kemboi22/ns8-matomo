@@ -5,8 +5,8 @@
 
 [Unit]
 Description=Podman mariadb-matomo.service
-BindsTo=matomo-pod.service
-Before=matomo.service
+BindsTo=matomo.service
+After=matomo.service
 
 
 [Service]
