@@ -22,7 +22,7 @@ ExecStartPre=/usr/local/bin/runagent discover-ldap
 ExecStartPre=/usr/local/bin/runagent discover-service
 ExecStartPre=/usr/local/bin/runagent expand-configuration
 ExecStartPre=/usr/local/bin/runagent reveal-master-secret
-ExecStartPost=/usr/bin/bash -c "while ! /usr/bin/podman exec matomo /usr/bin/curl  http://127.0.0.1:2221/matomo ; do sleep 3 ; done"
+ExecStartPost=/usr/bin/bash -c "while ! /usr/bin/podman exec matomo /usr/bin/curl  http://127.0.0.1:3858/matomo ; do sleep 3 ; done"
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/matomo.pid \
     --cidfile %t/matomo.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/matomo-pod.pod-id --replace -d --name  matomo \
