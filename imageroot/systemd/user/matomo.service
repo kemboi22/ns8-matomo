@@ -37,7 +37,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/matomo.pid \
     --volume matomo:var/www/html:z \
     --volume ./config/matomo.conf:/etc/httpd/conf/extra/matomo.conf:Z \
     --volume matomo:/var/www/html:z,ro \
-    ${MATOMO_SERVER_IMAGE}
+    ${MATOMO_IMAGE}
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/matomo.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP matomo
 SyslogIdentifier=%u
