@@ -20,7 +20,7 @@ Restart=always
 TimeoutStopSec=70
 ExecStartPre=/bin/rm -f %t/matomo-pod.pod.pid %t/matomo-pod.pod.pod-id
 ExecStartPre=/usr/bin/podman pod create --infra-conmon-pidfile %t/matomo-pod.pod.pid \
-    --pod-id-file %t/matomo-pod.pod.pod-id \
+    --pod-id-file %t/matomo-pod.pod-id \
     --name paperlessngx \
     --publish 127.0.0.1:${TCP_PORT}:3858 \
     --replace
