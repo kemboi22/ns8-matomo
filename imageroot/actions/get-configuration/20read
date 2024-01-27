@@ -12,14 +12,15 @@ config = {}
 # Read current configuration from the environment file
 config["host"] = os.getenv("TRAEFIK_HOST","")
 config["lets_encrypt"] = os.getenv("TRAEFIK_LETS_ENCRYPT") == "True"
-config["matomo_database_username"] = os.getenv("MATOMO_DATABASE_USERNAME", "matomo")
+config["matomo_database_username"] = os.getenv("MATOMO_DATABASE_USERNAME","matomo")
 config["matomo_database_password"] = os.getenv("MATOMO_DATABASE_PASSWORD","Nethesis,1234")
 config["matomo_database_dbname"] = os.getenv("MATOMO_DATABASE_DBNAME","matomo")
+config["matomo_database_host"] = os.getenv("MATOMO_DATABASE_HOST","")
 config["mariadb_auto_upgrade"] = os.getenv("MARIADB_AUTO_UPGRADE") == "1"
 config["mariadb_disable_upgrade_backup"] = os.getenv("MARIADB_DISABLE_UPGRADE_BACKUP") == "1"
-config["matomo_database_tables_prefix"] = os.getenv("MATOMO_DATABASE_TABLES_PREFIX") == "1"
-config["matomo_database_adapter"] = os.getenv("MATOMO_DATABASE_ADAPTER") == "1"
-config["matomo_database_host"] = os.getenv("MATOMO_DATABASE_HOST")
+config["matomo_database_tables_prefix"] = os.getenv("MATOMO_DATABASE_TABLES_PREFIX","")
+config["matomo_database_adapter"] = os.getenv("MATOMO_DATABASE_ADAPTER","")
+
 
 rdb = agent.redis_connect() # full read-only access on every key
 

@@ -24,11 +24,13 @@ agent.set_env("MATOMO_DATABASE_TABLES_PREFIX", "matomo")
 agent.set_env("MARIADB_DISABLE_UPGRADE_BACKUP", 1)
 agent.set_env("MARIADB_AUTO_UPGRADE", 1)
 agent.set_env("PHP_MEMORY_LIMIT", 2048)
-agent.set_env("MATOMO_DATABASE_HOST", "http://127.0.0.1:3306")
 agent.set_env("MARIADB_INITDB_SKIP_TZINFO", "1")
-agent.set_env("MATOMO_DATABASE_USERNAME", "matomo")
-agent.set_env("MATOMO_DATABASE_PASSWORD", "Nethesis,1234")
-agent.set_env("MATOMO_DATABASE_DBNAME", "matomo")
+
+# agent.set_env("MATOMO_DATABASE_HOST", "localhost")
+# agent.set_env("MATOMO_DATABASE_USERNAME", "matomo")
+# agent.set_env("MATOMO_DATABASE_PASSWORD", "Nethesis,1234")
+# agent.set_env("MATOMO_DATABASE_DBNAME", "matomo")
+
 # Try to parse the stdin as JSON.
 
 
