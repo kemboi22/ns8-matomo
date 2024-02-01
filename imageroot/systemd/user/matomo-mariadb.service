@@ -4,9 +4,9 @@
 #
 
 [Unit]
-Description=Podman mariadb-matomo.service
+Description=Podman matomo-mariadb.service
 BindsTo=matomo.service
-After=matomo.service
+Before=matomo-app.service
 
 
 [Service]
