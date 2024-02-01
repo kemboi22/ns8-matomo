@@ -18,16 +18,16 @@ Environment=PODMAN_SYSTEMD_UNIT=%n
 EnvironmentFile=-%S/state/environment
 Restart=always
 TimeoutStopSec=70
-ExecStartPre=/bin/rm -f %t/matomo.pod.pid %t/matomo.pod-id
-ExecStartPre=/usr/bin/podman pod create --infra-conmon-pidfile %t/matomo.pod.pid \
+ExecStartPre=/bin/rm -f %t/matomo.pid %t/matomo.pod-id
+ExecStartPre=/usr/bin/podman pod create --infra-conmon-pidfile %t/matomo.pid \
     --pod-id-file %t/matomo-app.pod-id \
     --name matomo \
     --publish 127.0.0.1:${TCP_PORT}:3858 \
     --replace
-ExecStart=/usr/bin/podman pod start --pod-id-file %t/matomo.pod.pod-id
+ExecStart=/usr/bin/podman pod start --pod-id-file %t/matomo.pod-id
 ExecStop=/usr/bin/podman pod stop --ignore --pod-id-file %t/matomo.pod-id -t 10
 ExecStopPost=/usr/bin/podman pod rm --ignore -f --pod-id-file %t/matomo.pod-id
-PIDFile=%t/matomo-app.pod.pid
+PIDFile=%t/matomo-app.pid
 Type=forking
 
 [Install]
