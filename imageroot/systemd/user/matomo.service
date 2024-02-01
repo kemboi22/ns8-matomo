@@ -10,8 +10,8 @@
 
 [Unit]
 Description=Podman matomo.service
-Requires=mariadb-matomo.service matomo.service
-Before=mariadb-matomo.service matomo-app.service
+Requires=matomo-mariadb.service matomo.service
+Before=matomo-mariadb.service matomo-app.service
 
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n

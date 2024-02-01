@@ -16,7 +16,7 @@ import os
 data = json.load(sys.stdin)
 
 # Setup default values
-host = data.get("host")
+host = data.get("host", "")
 le = data.get("lets_encrypt", False)
 
 # Talk with agent using file descriptor.
