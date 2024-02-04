@@ -25,7 +25,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/matomo-mariadb.pid \
     --env MARIADB_ROOT_PASSWORD=Nethesis,1234 \
     --env MARIADB_DATABASE=matomo \
     --env MARIADB_USER=matomo \
-    --env MARIADB_PASSWORD=matomo \
+    --env MARIADB_PASSWORD=Matomo,1234 \
     --env MARIADB_AUTO_UPGRADE=1 \
     ${MARIADB_IMAGE} \
     --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
