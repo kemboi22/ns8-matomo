@@ -36,6 +36,6 @@ podman run \
   --env MARIADB_ROOT_PASSWORD=Nethesis,1234 \
   --env MARIADB_DATABASE=matomo \
   --env MARIADB_USER=matomo \
-  --env MARIADB_PASSWORD=matomo \
+  --env MARIADB_PASSWORD=Matomo,1234 \
   --replace --name=restore_db \
   ${MARIADB_IMAGE}
