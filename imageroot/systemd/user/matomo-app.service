@@ -1,34 +1,32 @@
 #
-# Copyright (C) 2023 Nethesis S.r.l.
+# Copyright (C) 2022 Nethesis S.r.l.
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 
 [Unit]
 Description=Podman  matomo-app.service
 BindsTo=matomo.service
-After=matomo-mariadb.service
+After=matomo.service matomo-mariadb.service
 
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n
 EnvironmentFile=%S/state/environment
-EnvironmentFile=-%S/state/discovery_mail.env
-EnvironmentFile=-%S/state/discovery_ldap.env
+EnvironmentFile=-%S/state/smarthost.env
 WorkingDirectory=%S/state
 Restart=always
 TimeoutStopSec=70
-ExecStartPre=/usr/bin/bash -c "/bin/mkdir -p {config,backups}"
-ExecStartPre=/bin/rm -f %t/matomo.pid %t/matomo.ctr-id
-ExecStartPre=/usr/local/bin/runagent discover-ldap
-ExecStartPre=/usr/local/bin/runagent discover-service
-ExecStartPre=/usr/local/bin/runagent expand-configuration
-ExecStartPre=/usr/local/bin/runagent reveal-master-secret
-ExecStartPost=/usr/bin/bash -c "while ! /usr/bin/podman exec matomo /usr/bin/curl  http://127.0.0.1:80/matomo ; do sleep 3 ; done"
+ExecStartPre=/bin/mkdir -p config
+ExecStartPre=/bin/rm -f %t/matomo-app.pid %t/matomo-app.ctr-id
+ExecStartPre=-runagent discover-smarthost
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/matomo-app.pid \
-    --cidfile %t/matomo.ctr-id --cgroups=no-conmon \
-    --pod-id-file %t/matomo.pod-id --replace -d --name  matomo \
-#   --env-file=%S/state/environment -p 127.0.0.1:${TCP_PORT}:8080 \
+    --cidfile %t/matomo-app.ctr-id --cgroups=no-conmon \
+    --pod-id-file %t/matomo.pod-id --replace -d --name  matomo-app \
+    --volume matomo-app:/var/www/html/:Z \
+    --volume ./config:/tmp:Z \
+    --env=MATOMO_* \
     --env MATOMO_DATABASE_ADAPTER=mysql \
     --env MATOMO_DATABASE_HOST=127.0.0.1 \
+    --env MATOMO_DATABASE_TABLES_PREFIX=ns8 \
     --env MATOMO_DATABASE_USERNAME=matomo \
     --env MATOMO_DATABASE_PASSWORD=Matomo,1234 \
     --env MATOMO_DATABASE_DBNAME=matomo \
@@ -40,10 +38,10 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/matomo-app.pid \
     --volume plugins:/varwww/html/plugins \
     --volume ./matomo/plugins:/var/www/html/plugins \
     ${MATOMO_IMAGE}
-ExecStop=/usr/bin/podman stop --ignore --cidfile %t/matomo.ctr-id -t 10
-ExecReload=/usr/bin/podman kill -s HUP matomo
+ExecStop=/usr/bin/podman stop --ignore --cidfile %t/matomo-app.ctr-id -t 10
+ExecReload=/usr/bin/podman kill -s HUP matomo-app
 SyslogIdentifier=%u
-ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/matomo.ctr-id
+ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/matomo-app.ctr-id
 PIDFile=%t/matomo-app.pid
 Type=forking
 

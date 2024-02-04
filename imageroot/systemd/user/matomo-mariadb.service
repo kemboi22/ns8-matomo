@@ -6,7 +6,7 @@
 [Unit]
 Description=Podman matomo-mariadb.service
 BindsTo=matomo.service
-Before=matomo-app.service
+After=matomo.service
 
 
 [Service]
@@ -22,7 +22,11 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/matomo-mariadb.pid \
     --volume mysql-data:/usr/src/matomo/data \
     --env MARIADB_AUTO_UPGRADE=1 \
     --env MARIADB_DISABLE_UPGRADE_BACKUP=1 \
-    --env MATOMO_DATABASE_TABLES_PREFIX=ns8 \
+    --env MARIADB_ROOT_PASSWORD=Nethesis,1234 \
+    --env MARIADB_DATABASE=matomo \
+    --env MARIADB_USER=matomo \
+    --env MARIADB_PASSWORD=matomo \
+    --env MARIADB_AUTO_UPGRADE=1 \
     ${MARIADB_IMAGE} \
     --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 ExecStartPost=/usr/bin/podman exec  matomo-mariadb /bin/bash -c 'printf "[client] \npassword=Nethesis,1234" > /root/.my.cnf'
