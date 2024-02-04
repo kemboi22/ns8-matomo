@@ -32,11 +32,13 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/matomo-app.pid \
     --env MATOMO_DATABASE_USERNAME=matomo \
     --env MATOMO_DATABASE_PASSWORD=Matomo,1234 \
     --env MATOMO_DATABASE_DBNAME=matomo \
-    --volume ./config:/var/www/html/config:Z \
-    --volume ./logs:/var/www/html/logs:z \
+    --volume ./matomo/config:/var/www/html/config:Z \
+    --volume ./matomo/logs:/var/www/html/logs:z \
     --volume matomo:var/www/html:z \
-    --volume ./config/matomo.conf:/etc/httpd/conf/extra/matomo.conf:Z \
     --volume matomo:/var/www/html:z,ro \
+    --volume ./matomo/config/matomo.conf:/etc/httpd/conf/extra/matomo.conf:Z \
+    --volume plugins:/varwww/html/plugins \
+    --volume ./matomo/plugins:/var/www/html/plugins \
     ${MATOMO_IMAGE}
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/matomo.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP matomo
