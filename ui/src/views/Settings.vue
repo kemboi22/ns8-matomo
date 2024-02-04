@@ -159,14 +159,7 @@ export default {
     getConfigurationCompleted(taskContext, taskResult) {
       this.loading.getConfiguration = false;
       const config = taskResult.output;
-
-      // TODO set configuration fields
-      // ...
-
-      // TODO remove
-      console.log("config", config);
-
-      // TODO focus first configuration field
+      this.host = config.host
       this.focusElement("host");
     },
     validateConfigureModule() {
@@ -227,7 +220,7 @@ export default {
         this.createModuleTaskForApp(this.instanceName, {
           action: taskAction,
           data: {
-            // TODO configuration fields
+            host: this.host
           },
           extra: {
             title: this.$t("settings.configure_instance", {
