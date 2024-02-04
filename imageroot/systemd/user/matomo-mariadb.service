@@ -14,10 +14,10 @@ Environment=PODMAN_SYSTEMD_UNIT=%n
 EnvironmentFile=%S/state/environment
 Restart=always
 TimeoutStopSec=70
-ExecStartPre=/bin/rm -f %t/mariadb-matomo.pid %t/mariadb-matomo.ctr-id
-ExecStart=/usr/bin/podman run --conmon-pidfile %t/mariadb-matomo.pid \
-    --cidfile %t/mariadb-matomo.ctr-id --cgroups=no-conmon \
-    --pod-id-file %t/matomo-app.pod-id --replace -d --name mariadb-matomo \
+ExecStartPre=/bin/rm -f %t/matomo-mariadb.pid %t/matomo-mariadb.ctr-id
+ExecStart=/usr/bin/podman run --conmon-pidfile %t/matomo-mariadb.pid \
+    --cidfile %t/matomo-mariadb.ctr-id --cgroups=no-conmon \
+    --pod-id-file %t/matomo.pod-id --replace -d --name matomo-mariadb \
     --env-file=%S/state/environment \
     --volume mysql-data:/usr/src/matomo/data \
     --env MARIADB_AUTO_UPGRADE=1 \
@@ -25,13 +25,13 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/mariadb-matomo.pid \
     --env MATOMO_DATABASE_TABLES_PREFIX=ns8 \
     ${MARIADB_IMAGE} \
     --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-ExecStartPost=/usr/bin/podman exec  mariadb-matomo /bin/bash -c 'printf "[client] \npassword=Nethesis,1234" > /root/.my.cnf'
-ExecStartPost=/usr/bin/podman exec mariadb-matomo /bin/bash -c "while ! mysqladmin ping -h localhost -P 3306 -u root; do sleep 1; done"
-ExecStop=/usr/bin/podman stop --ignore --cidfile %t/mariadb-matomo.ctr-id -t 10
-ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/mariadb-matomo.ctr-id
-ExecReload=/usr/bin/podman kill -s HUP mariadb-matomo
+ExecStartPost=/usr/bin/podman exec  matomo-mariadb /bin/bash -c 'printf "[client] \npassword=Nethesis,1234" > /root/.my.cnf'
+ExecStartPost=/usr/bin/podman exec matomo-mariadb /bin/bash -c "while ! mysqladmin ping -h localhost -P 3306 -u root; do sleep 1; done"
+ExecStop=/usr/bin/podman stop --ignore --cidfile %t/matomo-mariadb.ctr-id -t 10
+ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/matomo-mariadb.ctr-id
+ExecReload=/usr/bin/podman kill -s HUP matomo-mariadb
 SyslogIdentifier=%u
-PIDFile=%t/mariadb-matomo.pid
+PIDFile=%t/matomo-mariadb.pid
 Type=forking
 
 [Install]

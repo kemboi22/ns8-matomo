@@ -22,10 +22,10 @@ ExecStartPre=/usr/local/bin/runagent discover-ldap
 ExecStartPre=/usr/local/bin/runagent discover-service
 ExecStartPre=/usr/local/bin/runagent expand-configuration
 ExecStartPre=/usr/local/bin/runagent reveal-master-secret
-ExecStartPost=/usr/bin/bash -c "while ! /usr/bin/podman exec matomo /usr/bin/curl  http://127.0.0.1:3858/matomo ; do sleep 3 ; done"
+ExecStartPost=/usr/bin/bash -c "while ! /usr/bin/podman exec matomo /usr/bin/curl  http://127.0.0.1:80/matomo ; do sleep 3 ; done"
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/matomo-app.pid \
     --cidfile %t/matomo.ctr-id --cgroups=no-conmon \
-    --pod-id-file %t/matomo-app.pod-id --replace -d --name  matomo \
+    --pod-id-file %t/matomo.pod-id --replace -d --name  matomo \
 #   --env-file=%S/state/environment -p 127.0.0.1:${TCP_PORT}:8080 \
     --env MATOMO_DATABASE_ADAPTER=mysql \
     --env MATOMO_DATABASE_HOST=127.0.0.1 \
