@@ -18,6 +18,7 @@ TimeoutStopSec=70
 ExecStartPre=/bin/mkdir -p config
 ExecStartPre=/bin/rm -f %t/matomo-app.pid %t/matomo-app.ctr-id
 ExecStartPre=-runagent discover-smarthost
+ExecStartPost=/usr/bin/bash -c "while ! /usr/bin/podman exec matomo-app /usr/bin/curl  http://127.0.0.1:80/matomo ; do sleep 3 ; done"
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/matomo-app.pid \
     --cidfile %t/matomo-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/matomo.pod-id --replace -d --name  matomo-app \
