@@ -19,7 +19,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/matomo-mariadb.pid \
     --cidfile %t/matomo-mariadb.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/matomo.pod-id --replace -d --name matomo-mariadb \
     --env-file=%S/state/environment \
-    --volume mysql-data:/usr/src/matomo/data \
+    --volume mysql-data:/var/lib/mysql/:Z \
     --env MARIADB_AUTO_UPGRADE=1 \
     --env MARIADB_DISABLE_UPGRADE_BACKUP=1 \
     --env MARIADB_ROOT_PASSWORD=Nethesis,1234 \

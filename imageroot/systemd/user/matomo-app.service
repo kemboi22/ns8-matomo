@@ -32,6 +32,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/matomo-app.pid \
     --env MATOMO_DATABASE_DBNAME=matomo \
     --volume ./matomo/config:/var/www/html/config:Z \
     --volume ./matomo/logs:/var/www/html/logs:z \
+    --volume matomo-data:/usr/src/matomo/data \
     --volume matomo:var/www/html:z \
     --volume matomo:/var/www/html:z,ro \
     --volume ./matomo/config/matomo.conf:/etc/httpd/conf/extra/matomo.conf:Z \
