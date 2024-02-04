@@ -1,8 +1,7 @@
 {
   "name": "Matomo",
   "description": {
-    "en": "Google Analytics alternative that protects your data and your customers' privacy:
-    Take back control with Matomo – a powerful web analytics platform that gives you 100% data ownership."
+    "en": "Google Analytics alternative that protects your data and your customers' privacy:Take back control with Matomo; a powerful web analytics platform that gives you 100% data ownership."
   },
   "categories": ["monitoring"],
   "authors": [
