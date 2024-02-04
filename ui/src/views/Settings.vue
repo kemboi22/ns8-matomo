@@ -26,7 +26,7 @@
             <!-- TODO remove test field and code configuration fields -->
             <cv-text-input
               :label="$t('settings.host')"
-              v-model="host"
+              v-model.trim="host"
               :placeholder="$t('settings.host')"
               :disabled="loading.getConfiguration || loading.configureModule"
               :invalid-message="error.host"
@@ -85,7 +85,7 @@ export default {
         page: "settings",
       },
       urlCheckInterval: null,
-      hosts: "", // TODO remove
+      host: "", // TODO remove
       loading: {
         getConfiguration: false,
         configureModule: false,
