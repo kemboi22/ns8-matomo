@@ -31,7 +31,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/matomo-app.pid \
     --env MATOMO_DATABASE_DBNAME=matomo \
     --volume matomo-app:/var/www/html/:Z \
     --volume ./config:/tmp:Z \
-    --volume _configs/config:/var/www/html/config \
+    --volume configs/config:/var/www/html/config \
     --volume matomo_logs:/var/www/html/logs \
     --volume matomo_plugins:/var/www/html/plugins \
     ${MATOMO_IMAGE}
