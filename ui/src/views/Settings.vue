@@ -42,6 +42,44 @@
                 />
               </cv-column>
             </cv-row>
+            <cv-toggle
+                value="letsEncrypt"
+                :label="$t('settings.lets_encrypt')"
+                v-model="isLetsEncryptEnabled"
+                :disabled="loading.getConfiguration || loading.configureModule"
+                class="mg-bottom"
+            >
+              <template slot="text-left">{{
+                  $t("settings.disabled")
+                }}</template>
+              <template slot="text-right">{{
+                  $t("settings.enabled")
+                }}</template>
+            </cv-toggle>
+            <cv-toggle
+                value="httpToHttps"
+                :label="$t('settings.http_to_https')"
+                v-model="isHttpToHttpsEnabled"
+                :disabled="loading.getConfiguration || loading.configureModule"
+                class="mg-bottom"
+            >
+              <template slot="text-left">{{
+                  $t("settings.disabled")
+                }}</template>
+              <template slot="text-right">{{
+                  $t("settings.enabled")
+                }}</template>
+            </cv-toggle>
+            <div v-if="error.configureModule" class="bx--row">
+              <div class="bx--col">
+                <NsInlineNotification
+                    kind="error"
+                    :title="$t('action.configure-module')"
+                    :description="error.configureModule"
+                    :showCloseButton="false"
+                />
+              </div>
+            </div>
             <NsButton
               kind="primary"
               :icon="Save20"
@@ -85,7 +123,9 @@ export default {
         page: "settings",
       },
       urlCheckInterval: null,
-      host: "", // TODO remove
+      host: "",
+      isLetsEncryptEnabled: false,
+      isHttpToHttpsEnabled: false,
       loading: {
         getConfiguration: false,
         configureModule: false,
@@ -93,7 +133,9 @@ export default {
       error: {
         getConfiguration: "",
         configureModule: "",
-        host: "", // TODO remove
+        host: "",
+        lets_encrypt: "",
+        http2https: "",
       },
     };
   },
@@ -157,9 +199,11 @@ export default {
       this.loading.getConfiguration = false;
     },
     getConfigurationCompleted(taskContext, taskResult) {
-      this.loading.getConfiguration = false;
       const config = taskResult.output;
       this.host = config.host
+      this.isLetsEncryptEnabled = config.lets_encrypt;
+      this.isHttpToHttpsEnabled = config.http2https;
+      this.loading.getConfiguration = false;
       this.focusElement("host");
     },
     validateConfigureModule() {
@@ -220,7 +264,9 @@ export default {
         this.createModuleTaskForApp(this.instanceName, {
           action: taskAction,
           data: {
-            host: this.host
+            host: this.host,
+            lets_encrypt: this.isLetsEncryptEnabled,
+            http2https: this.isHttpToHttpsEnabled,
           },
           extra: {
             title: this.$t("settings.configure_instance", {
