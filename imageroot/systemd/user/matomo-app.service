@@ -25,13 +25,13 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/matomo-app.pid \
     --env=MATOMO_* \
     --env MATOMO_DATABASE_ADAPTER=mysql \
     --env MATOMO_DATABASE_HOST=127.0.0.1 \
-    --env MATOMO_DATABASE_TABLES_PREFIX=matomo_ \
+    --env MATOMO_DATABASE_TABLES_PREFIX=matomo \
     --env MATOMO_DATABASE_USERNAME=matomo \
     --env MATOMO_DATABASE_PASSWORD=Matomo,1234 \
     --env MATOMO_DATABASE_DBNAME=matomo \
     --volume matomo-app:/var/www/html/:Z \
     --volume ./config:/tmp:Z \
-    --volume ./matomo/config:/var/www/html/config \
+    --volume configs:/var/www/html/config \
     --volume matomo_logs:/var/www/html/logs \
     --volume matomo_plugins:/var/www/html/plugins \
     ${MATOMO_IMAGE}
